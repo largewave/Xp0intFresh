@@ -42,36 +42,36 @@ OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的�
 
 
 接下来这个类会执行doFilter()方法，并且执行prepare.wrapRequest调用，因此跳转到PrepareOperations类，可以看到再次调用dispatcher.wrapRequest方法：
-![image](C:/Users/博智/Desktop/pic/PrepareOperations.png)
+![image](./pic/PrepareOperations.png)
 
 在这个方法中，可以看到这里先获取ContenType，判断是否包含multipart/form-data，这也就是后面我们要在ognl表达式中包含multipart/form-data的原因。然后会去new一个MultiPartRequestWrapper对象，
-![image](C:/Users/博智/Desktop/pic/dispatcher.png)
+![image](./pic/dispatcher.png)
 
 然后在MultiPartRequestWrapper的构造函数中，会调用multi.parse方法，在这里multi=multiPartRequest，会调用JakartaMultiPartRequest类中的parse方法。
-![image](C:/Users/博智/Desktop/pic/MultiPartRequestWrapper.png)
+![image](./pic/MultiPartRequestWrapper.png)
 
 在parse方法中调用了processUpload方法，据别人的解析所说，这个方法会判断content-type是否是multipart开头，不是的话引发异常，并将content-type信息放入异常中。不过这个方法我跟踪不到。然后异常会调用buildErrorMessage函数。
-![image](C:/Users/博智/Desktop/pic/JakartaMultiPartRequest.png)
+![image](./pic/JakartaMultiPartRequest.png)
 
 接着这个函数会调用LocalizedTextUtil.findText函数：
-![image](C:/Users/博智/Desktop/pic/buildErrorMessage.png)
+![image](./pic/buildErrorMessage.png)
 
 然后搜索defaultMessage，也就是前面传进来的错误信息，可以找到最开始调用是在
 getDefaultMessage函数里面：
-![image](C:/Users/博智/Desktop/pic/getdefaultmessage.png)
+![image](./pic/getdefaultmessage.png)
 
 继续跟进getDefaultMessage函数,可以发现又被TextParseUtil.translateVariables函数调用：
-![image](C:/Users/博智/Desktop/pic/default.png)
+![image](./pic/default.png)
 
 注意这里的$和%，两者都能告诉执行环境 ${} 或 %{} 中的内容为ognl表达式。
-![image](C:/Users/博智/Desktop/pic/char.png)
+![image](./pic/char.png)
 
 经过很多次TextParseUtil.translateVariables函数之后,错误信息传入TextParser.evaluate函数
-![image](C:/Users/博智/Desktop/pic/parse.png)
+![image](./pic/parse.png)
 
 最后在OgnlTextParser类中执行ognl表达式：
 
-![image](C:/Users/博智/Desktop/pic/ognl.png)
+![image](./pic/ognl.png)
 
 然后再把结果一步一步返回回去，存进一个数组里，等待geterrors函数调用。
 ### 3. exp
