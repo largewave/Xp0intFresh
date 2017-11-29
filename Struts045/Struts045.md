@@ -1,4 +1,4 @@
-## Struts2 045 漏洞分析
+﻿## Struts2 045 漏洞分析
 ### 目录
 - 基础知识
 - Struts2 045 源码分析
@@ -38,7 +38,7 @@ OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的�
 从前面的分析可以知道，
 
 查看web.xml文件配置可以看到拦截请求的过滤器是StrutsPrepareAndExecuteFilter：
-![image](C:/Users/博智/Desktop/pic/webxml.png)
+![image](./pic/webxml.png)
 
 
 接下来这个类会执行doFilter()方法，并且执行prepare.wrapRequest调用，因此跳转到PrepareOperations类，可以看到再次调用dispatcher.wrapRequest方法：
