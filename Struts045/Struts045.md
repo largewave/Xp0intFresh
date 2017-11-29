@@ -45,7 +45,7 @@ OGNL是Object-Graph Navigation Language的缩写，它是一种功能强大的�
 ![image](./pic/PrepareOperations.png)
 
 在这个方法中，可以看到这里先获取ContenType，判断是否包含multipart/form-data，这也就是后面我们要在ognl表达式中包含multipart/form-data的原因。然后会去new一个MultiPartRequestWrapper对象，
-![image](./pic/dispatcher.png)
+![image](./pic/Dispatcher.png)
 
 然后在MultiPartRequestWrapper的构造函数中，会调用multi.parse方法，在这里multi=multiPartRequest，会调用JakartaMultiPartRequest类中的parse方法。
 ![image](./pic/MultiPartRequestWrapper.png)
